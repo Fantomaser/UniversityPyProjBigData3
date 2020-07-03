@@ -3,6 +3,10 @@
 ## Для работы рекомендую скачать Visual Studio Code (редактор кода)
 https://code.visualstudio.com
 
+## Надо настроить Git
+- Регаемся тут https://github.com
+- Качаем и настраиваем вот это https://git-scm.com/downloads
+
 ## Чтобы склонировать репозиторий с кодом:
 - Скачайте https://git-fork.com
 - Запустите программу
