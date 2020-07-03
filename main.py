@@ -1,6 +1,7 @@
 import os
 import zipfile
 import requests
+import json
 
 #Делаем Get запрос для скачивания файла (он в zip)
 response = requests.get("https://op.mos.ru/EHDWSREST/catalog/export/get?id=785973")
@@ -25,3 +26,9 @@ f.close()
 #открываем скаченный zip и читаем
 z = zipfile.ZipFile('.\\temp\\responce.zip', 'r')
 z.extractall(".\\temp")
+
+f = open('.\\temp\\responce.zip', 'r')
+
+cameraInfo = json.loads(f.read())
+
+f.close()
