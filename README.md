@@ -4,12 +4,12 @@
 https://code.visualstudio.com
 
 ## Чтобы склонировать репозиторий с кодом:
-Скачайте https://git-fork.com
-Запустите программу
-File->Clone...->
-RepositoryUrl = https://github.com/Fantomaser/UniversityPyProjBigData3.git
-ParentFolder - Папка в которой будет лежать проет
-Name = UniversityPyProjBigData3
+- Скачайте https://git-fork.com
+- Запустите программу
+- File->Clone...->
+- RepositoryUrl = https://github.com/Fantomaser/UniversityPyProjBigData3.git
+- ParentFolder - Папка в которой будет лежать проет
+- Name = UniversityPyProjBigData3
 
 ## Создаем новую ветку
 Далее жмем правой кнопкой мыши на верхнем коммите (там галочка и написано master и правее origin/master)
@@ -19,17 +19,17 @@ Name = UniversityPyProjBigData3
 Название слова через "-" низким кейсом
 
 ## Заливка данных
-Далее делаем свою работу и находим с лева в fork вкладку Changes
-В верхней файлы которые вы поменяли. Выбираем которые надо отправить и жмем stage
-С лева с низу "Enter commit subject" вводим изменения кратко
-Ниже поле для развернутого пояснения че сделали
-Когда ввели жмем Commin
-Переходим во вкладку AllCommits и сверху находим то что вводили в описание. Выделяем и жмем на кнопку push
+- Далее делаем свою работу и находим с лева в fork вкладку Changes
+- В верхней части файлы которые вы поменяли. Выбираем которые надо отправить и жмем stage
+- С лева с низу "Enter commit subject" вводим изменения кратко
+- Ниже поле для развернутого пояснения че сделали
+- Когда ввели жмем Commin
+- Переходим во вкладку AllCommits и сверху находим то что вводили в описание. Выделяем и жмем на кнопку push
 
 
 ## Для работы проекта необходимо выполнить команды:
-pip install requests
-pip install -U pylint --user (это только для Visual Studio Code)
+* pip install requests
+* pip install -U pylint --user (это только для Visual Studio Code)
 
 #Просьба добавлять команды когда необходимы какие-то внешние библиотеки поставить или сконфигурировать питон
 
@@ -37,7 +37,7 @@ pip install -U pylint --user (это только для Visual Studio Code)
 https://python-scripts.com/json
 
 ###Каждый делает свою часть в отдельном файле 
-как это сделать см тут - https://metanit.com/python/tutorial/2.10.php
+- как это сделать см тут - https://metanit.com/python/tutorial/2.10.php
 
 В коде есть часть для вызова своего модуля
 туда дописываем AZAZA( cameraInfo )
