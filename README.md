@@ -33,7 +33,10 @@ https://code.visualstudio.com
 
 ## Для работы проекта необходимо выполнить команды:
 * pip install requests
+* pip install python-tk
 * pip install -U pylint --user (это только для Visual Studio Code)
+* python -mpip install -U matplotlib (будем использовать matplotlib) объяснение библиотеки можно найти тут https://python-scripts.com/matplotlib
+- (Спойлер) не обязательно читать начало и историю, можно начать с примеров и делать по подобию 
 
 #Просьба добавлять команды когда необходимы какие-то внешние библиотеки поставить или сконфигурировать питон
 
@@ -49,15 +52,36 @@ https://python-scripts.com/json
 Также воизбежание дальнейших вопросов напоминаю 
 надо подключить свой модуль в файле main.py чтобы испльзовать свои функции
 
-### Весь код оформляем в виде функции пример:
+### Весь код оформляем в виде класса с функциями close и open с обязательным параметром json_container пример:
 
 ```
-def AZAZA( json ):
-    #и тут работаем с json выполняя задачу
-    #функции называем так чтобы было понятно к какой задаче относится
-    #запускаем функции в хронологическом порядке как в задании
+class ProjectVova:
+    def open(self, json_container):
+        #Функция будет вызываться когда будет открыт ваш проект
+        #и тут работаем с json выполняя задачу
+        #функции называем так чтобы было понятно к какой задаче относится
+        #запускаем функции в хронологическом порядке как в задании
+
+        rng = np.arange(100)
+        rnd = np.random.randint(0, 10, size=(3, rng.size))
+        yrs = 1950 + rng
+            
+        self.fig, ax = plt.subplots(figsize=(5, 3))
+        ax.stackplot(yrs, rng + rnd, labels=['Eastasia', 'Eurasia', 'Oceania'])
+        ax.set_title('Combined debt growth over time')
+        ax.legend(loc='upper left')
+        ax.set_ylabel('Total debt')
+        ax.set_xlim(xmin=yrs[0], xmax=yrs[-1])
+        self.fig.tight_layout()
+        plt.show()
+
+    def close(self, json_container):
+        #Функция будет вызываться когда будет закрыт ваш проект
+        plt.close(self.fig)
+
 ```
 
+Так же необходимо в 62 строке файлa main по примеру добавить ваш класс
 
 ## Далее задания по пунктам
 
