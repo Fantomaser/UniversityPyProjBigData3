@@ -1,3 +1,4 @@
+import new_dataset_task
 import os
 import zipfile
 import requests
@@ -61,7 +62,7 @@ class Window:
         self.window = Tk()
         self.window.title("Добро пожаловать в приложение PythonRu")
 
-        self.work_collaction = [] # пример [mybutton(), mybutton2()]
+        self.work_collaction = [new_dataset_task.ProjectEvgen()] # пример [mybutton(), mybutton2()]
         self.ptr = 0
 
         self.btn = Button(self.window, text="back", command=self.clicked_before)
