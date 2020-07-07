@@ -3,6 +3,8 @@ import zipfile
 import requests
 import json
 import shutil
+import matplotlib.pyplot as plt
+import numpy as np
 
 class JsonList(list):
     def __init__(self, collection):
@@ -25,8 +27,12 @@ class JsonList(list):
         for it in collection:           
             for it2 in self.collection:
                 val = it2.get(param_name)
-                if val != None and val == it:
-                    counter+=1
+                if val != None:
+                    if type(val) == type([]):
+                        if val[0] == it:
+                            counter+=1
+                    elif val == it:
+                        counter+=1
             n_collection.append([it, counter])
             counter = 0
         return JsonList(n_collection)
@@ -40,6 +46,17 @@ class JsonList(list):
                     break
         return JsonList(n_collection)
 
+    def MakeData(self):
+        data = list()
+        data.append([])
+        data.append([])
+        data.append([])
+        for it in self.collection:
+            data[0].append(it['Административный округ'])
+            data[1].append(it['Камеры'])
+            data[2].append(it['Участковый'])
+        return data
+
     def __str__(self):
         return self.collection.__str__()
 
@@ -51,7 +68,9 @@ class ProjectEvgen:
         #print(json_container)
         #print(cameraInfo)
 
-        response = requests.get("https://op.mos.ru/EHDWSREST/catalog/export/get?id=851697")
+        response = requests.get("https://op.mos.ru/EHDWSREST/catalog/export/get?id=867249")
+        #https://op.mos.ru/EHDWSREST/catalog/export/get?id=851697 #участковый
+        #https://op.mos.ru/EHDWSREST/catalog/export/get?id=788381 #жратва
         if response.status_code != 200:
             print("Server Error")
         else:
@@ -86,12 +105,27 @@ class ProjectEvgen:
 
         uniqueStreet = cameraInfo.GetAllUniquWalue("AdmArea")
         cameraCounter = cameraInfo.GetEqualRowsCount("AdmArea", uniqueStreet)
+        print(uniqueStreet)
+        print("-----------------")
         policeCounter = policeInfo.GetEqualRowsCount("AdmArea", uniqueStreet)
+        print(policeCounter)
+        print("-----------------")
 
         ZipInfo = cameraCounter.ZipFilds(policeCounter, "Административный округ", "Камеры", "Участковый")
         print(ZipInfo)
 
+        data = ZipInfo.MakeData()
+
+        X = np.arange(len(data[0]))
+
+        self.fig = plt.figure()
+        ax = self.fig.add_axes([0,0,1,1])
+
+        ax.bar(X + 0.00, data[1], color = 'b', width = 0.25)
+        ax.bar(X + 0.25, data[2], color = 'r', width = 0.25)
+        plt.show()
+
         #************************************
     
     def close(self, json_container):
-        print("")
+        plt.close(self.fig)
