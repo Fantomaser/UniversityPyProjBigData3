@@ -5,6 +5,8 @@ import json
 import shutil
 from tkinter import *
 
+
+
 #подчищаем временную папку на случай если программа упала и остались папка с файлами
 if os.path.exists("temp"):
     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
@@ -44,7 +46,7 @@ files = os.listdir(".\\temp")
 f = open('.\\temp\\'+files[0], 'r', encoding='windows-1251')
 
 #десериализация в json
-cameraInfo = json.loads(f.read(), encoding='windows-1251')
+cameraInfo = json.loads(f.read())
 
 f.close()
 
@@ -68,7 +70,7 @@ class Window:
         self.btn2 = Button(self.window, text="next", command=self.clicked_next)
         self.btn2.pack( side = RIGHT, fill = BOTH )
 
-        self.work_collaction[self.ptr].open()
+        self.work_collaction[self.ptr].open(json_container)
         self.window.mainloop()
         
     def clicked_before(self):
@@ -84,4 +86,4 @@ class Window:
             self.work_collaction[self.ptr].open(json_container)
 
 
-mywindow = Window()
+mywindow = Window(cameraInfo)
