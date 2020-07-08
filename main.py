@@ -73,15 +73,15 @@ class Window:
         
     def clicked_before(self):
         if self.ptr > 0:
-            self.work_collaction[self.ptr].close(json_container)
+            self.work_collaction[self.ptr].close(self.json_container)
             self.ptr-=1
-            self.work_collaction[self.ptr].open(json_container)
+            self.work_collaction[self.ptr].open(self.json_container)
 
     def clicked_next(self):
         if self.ptr < (len(self.work_collaction)-1):
-            self.work_collaction[self.ptr].close(json_container)
+            self.work_collaction[self.ptr].close(self.json_container)
             self.ptr+=1
-            self.work_collaction[self.ptr].open(json_container)
+            self.work_collaction[self.ptr].open(self.json_container)
 
 
 mywindow = Window()
