@@ -3,6 +3,7 @@ import zipfile
 import requests
 import json
 import shutil
+import VovaProject
 from tkinter import *
 
 #подчищаем временную папку на случай если программа упала и остались папка с файлами
@@ -59,7 +60,7 @@ class Window:
         self.window = Tk()
         self.window.title("Добро пожаловать в приложение PythonRu")
 
-        self.work_collaction = [] # пример [mybutton(), mybutton2()]
+        self.work_collaction = [VovaProject()] # пример [mybutton(), mybutton2()]
         self.ptr = 0
 
         self.btn = Button(self.window, text="back", command=self.clicked_before)
