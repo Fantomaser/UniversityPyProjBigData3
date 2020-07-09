@@ -33,6 +33,7 @@ https://code.visualstudio.com
 
 ## Для работы проекта необходимо выполнить команды:
 * pip install requests
+* pip install folium // для карт
 * pip install python-tk
 * pip install -U pylint --user (это только для Visual Studio Code)
 * python -mpip install -U matplotlib (будем использовать matplotlib) объяснение библиотеки можно найти тут https://python-scripts.com/matplotlib
