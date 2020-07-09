@@ -1,4 +1,6 @@
 import new_dataset_task
+import sorted_collaction_task
+import map_visualization_task
 import os
 import zipfile
 import requests
@@ -62,7 +64,7 @@ class Window:
         self.window = Tk()
         self.window.title("Добро пожаловать в приложение PythonRu")
 
-        self.work_collaction = [new_dataset_task.ProjectEvgen()] # пример [mybutton(), mybutton2()]
+        self.work_collaction = [new_dataset_task.NewDataProjectEvgen(), sorted_collaction_task.SortedCollactionProjectEvgen(), map_visualization_task.MapVisualizationProjectEvgen()] # пример [mybutton(), mybutton2()]
         self.ptr = 0
 
         self.btn = Button(self.window, text="back", command=self.clicked_before)
@@ -71,20 +73,20 @@ class Window:
         self.btn2 = Button(self.window, text="next", command=self.clicked_next)
         self.btn2.pack( side = RIGHT, fill = BOTH )
 
-        self.work_collaction[self.ptr].open(json_container)
+        self.work_collaction[self.ptr].open(self.json_container)
         self.window.mainloop()
         
     def clicked_before(self):
         if self.ptr > 0:
-            self.work_collaction[self.ptr].close(json_container)
+            self.work_collaction[self.ptr].close(self.json_container)
             self.ptr-=1
-            self.work_collaction[self.ptr].open(json_container)
+            self.work_collaction[self.ptr].open(self.json_container)
 
     def clicked_next(self):
         if self.ptr < (len(self.work_collaction)-1):
-            self.work_collaction[self.ptr].close(json_container)
+            self.work_collaction[self.ptr].close(self.json_container)
             self.ptr+=1
-            self.work_collaction[self.ptr].open(json_container)
+            self.work_collaction[self.ptr].open(self.json_container)
 
 
 mywindow = Window(cameraInfo)
