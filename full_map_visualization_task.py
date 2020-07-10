@@ -1,14 +1,60 @@
-import Helper
-import numpy as np
-import matplotlib.pyplot as plt
-import os
-import folium
 import webbrowser
 import shutil
+import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+import folium
+
+import Helper
 
 class FullMupVisualizationProjectEvgen:
+    def open(self, json_container):
+        map = folium.Map(location=[55.753228, 37.622480], zoom_start = 9)
 
-    def color_picker(self, value, max, min):
+        geodata = self.MakeGeoData(json_container)
+        folium.GeoJson(
+            "http://gis-lab.info/data/mos-adm/ao.geojson",
+            name='geojson',
+        ).add_to(map)
+
+        for area in geodata[2]:
+            folium.CircleMarker(location=[area["lan"], area["lat"]], radius = 9, popup = str(area["AdmArea"]), fill_color=self.ColorPicker(area["count"], geodata[0], geodata[1]), color="gray", fill_opacity = 0.9).add_to(map)
+
+        folium.LayerControl().add_to(map)
+
+        os.mkdir(".\\temp")
+
+        map.save(".\\temp\\map1.html")
+        webbrowser.open('.\\temp\\map1.html', new=1)
+
+        sortedCameraCounter = Helper.JsonList(sorted(geodata[2], key=lambda camera: camera["count"]))
+
+        data = sortedCameraCounter.MakeComparisonData("AdmArea", "count").GetList()
+
+        print(data)
+
+        x = np.arange(len(data[0]))
+
+        self.fig, self.ax = plt.subplots(figsize=(8,6))
+        self.fig.canvas.set_window_title('Проверка суждения о количестве камер в районах ЦАО')
+
+        rects = self.ax.bar(x + 0.00, data[1], color = 'b', width = 0.50, label="камеры")
+
+        self.ax.set_ylabel('Scores')
+        self.ax.set_title("Количество камер по округам")
+        self.ax.set_xticks(x)
+        self.ax.set_xticklabels(data[0])
+        self.ax.legend()
+
+        self.Autolabel(rects, "left")
+
+        self.fig.tight_layout()
+
+        plt.show()
+
+    def ColorPicker(self, value, max, min):
         scale = (max - min) / 510
         color = value - min
         if value == min:
@@ -27,54 +73,7 @@ class FullMupVisualizationProjectEvgen:
             color = "#ff"+hex(color)[2:]+"00"
         return color
 
-    def open(self, json_container):
-        map = folium.Map(location=[55.753228, 37.622480], zoom_start = 9)
-
-        geodata = self.makeGeoData(json_container)
-        folium.GeoJson(
-            "http://gis-lab.info/data/mos-adm/ao.geojson",
-            name='geojson',
-        ).add_to(map)
-
-        for area in geodata[2]:
-            folium.CircleMarker(location=[area["lan"], area["lat"]], radius = 9, popup = str(area["AdmArea"]), fill_color=self.color_picker(area["count"], geodata[0], geodata[1]), color="gray", fill_opacity = 0.9).add_to(map)
-
-        folium.LayerControl().add_to(map)
-
-        os.mkdir(".\\temp")
-
-        map.save(".\\temp\\map1.html")
-        webbrowser.open('.\\temp\\map1.html', new=1)
-
-        sortedCameraCounter = Helper.JsonList(sorted(geodata[2], key=lambda camera: camera["count"]))
-
-        data = sortedCameraCounter.MakeComparisonData("AdmArea", "count").GetList()
-
-        print(data)
-
-        X = np.arange(len(data[0]))
-
-        self.fig, self.ax = plt.subplots(figsize=(8,6))
-        self.fig.canvas.set_window_title('Проверка суждения о количестве камер в районах ЦАО')
-
-        rects = self.ax.bar(X + 0.00, data[1], color = 'b', width = 0.50, label="камеры")
-
-        self.ax.set_ylabel('Scores')
-        self.ax.set_title("Количество камер по округам")
-        self.ax.set_xticks(X)
-        self.ax.set_xticklabels(data[0])
-        self.ax.legend()
-
-        self.autolabel(rects, "left")
-
-        self.fig.tight_layout()
-
-        plt.show()
-
-    def SwupCoordinates(self, coordinates):
-        return [coordinates[1],coordinates[0]]
-
-    def makeGeoData(self, collection):
+    def MakeGeoData(self, collection):
         ptr_collection = {}
         n_collection = list()
 
@@ -110,7 +109,7 @@ class FullMupVisualizationProjectEvgen:
 
         return [maxCount, minCount, n_collection]
 
-    def autolabel(self, rects, xpos='center'):
+    def Autolabel(self, rects, xpos='center'):
         ha = {'center': 'center', 'right': 'left', 'left': 'right'}
         offset = {'center': 0, 'right': 1, 'left': -1}
 
@@ -118,11 +117,11 @@ class FullMupVisualizationProjectEvgen:
             height = rect.get_height()
             self.ax.annotate('{}'.format(height),
                         xy=(rect.get_x() + rect.get_width() / 2, height),
-                        xytext=(offset[xpos]*3, 3),  # use 3 points offset
-                        textcoords="offset points",  # in both directions
+                        xytext=(offset[xpos]*3, 3),
+                        textcoords="offset points",
                         ha=ha[xpos], va='bottom')
 
-    def deleteTempFolder(self):
+    def DeleteTempFolder(self):
         if os.path.exists("temp"):
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
             shutil.rmtree(path)
@@ -130,4 +129,4 @@ class FullMupVisualizationProjectEvgen:
 
     def close(self, json_container):
         plt.close(self.fig)
-        self.deleteTempFolder()
+        self.DeleteTempFolder()

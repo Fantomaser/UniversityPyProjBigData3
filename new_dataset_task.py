@@ -1,57 +1,25 @@
-import os
-import zipfile
 import requests
-import json
+import zipfile
 import shutil
+import json
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
+
 import Helper
 
 class NewDataProjectEvgen:
-    def open(self, json_container):
-        
+    def open(self, json_container):      
         cameraInfo = Helper.JsonList(json_container)
 
-        response = requests.get("https://op.mos.ru/EHDWSREST/catalog/export/get?id=840262")#гостиницы
-        #https://op.mos.ru/EHDWSREST/catalog/export/get?id=851697 #участковый
-        #https://op.mos.ru/EHDWSREST/catalog/export/get?id=788381 #жратва
-        if response.status_code != 200:
-            print("Server Error")
-        else:
-            print("Server Ok state")
-
-        response.encoding = 'windows-1251'
-        
-        os.mkdir(".\\temp")
-        f = open('.\\temp\\n_responce.zip', 'wb')
-        f.write(response.content)
-        f.close()
-
-        z = zipfile.ZipFile('.\\temp\\n_responce.zip', 'r')
-        z.extractall(".\\temp")
-        z.close()
-
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp\\n_responce.zip')
-        os.remove(path)
-
-        files = os.listdir(".\\temp")
-        f = open('.\\temp\\'+files[0], 'r', encoding='windows-1251')
-
-        policeInfo = Helper.JsonList(json.loads(f.read(), encoding='windows-1251'))
-
-        f.close()
-
-        if os.path.exists("temp"):
-            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
-            shutil.rmtree(path)
-
-        # основная часть********************
+        hostelInfo = self.LoadNewInfo("https://op.mos.ru/EHDWSREST/catalog/export/get?id=840262")#гостиницы
 
         uniqueArea = cameraInfo.GetAllUniquWalue("AdmArea")
         cameraCounter = cameraInfo.GetEqualRowsCount("AdmArea", uniqueArea)
-        policeCounter = policeInfo.GetEqualRowsCount("AdmArea", uniqueArea)
+        hostelCounter = hostelInfo.GetEqualRowsCount("AdmArea", uniqueArea)
 
-        ZipInfo = cameraCounter.ZipFilds(policeCounter, "Административный округ", "Камеры", "Гостиницы")
+        ZipInfo = cameraCounter.ZipFilds(hostelCounter, "Административный округ", "Камеры", "Гостиницы")
         print(ZipInfo)
 
         data = ZipInfo.MakePairComparisonData("Административный округ", "Камеры", "Гостиницы").GetList()
@@ -74,7 +42,42 @@ class NewDataProjectEvgen:
 
         plt.show()
 
-        #************************************
+    def LoadNewInfo(self, url):
+        response = requests.get(url)
+
+        if response.status_code != 200:
+            print("Server Error")
+        else:
+            print("Server Ok state")
+
+        response.encoding = 'windows-1251'
+        
+        os.mkdir(".\\temp")
+        f = open('.\\temp\\n_responce.zip', 'wb')
+        f.write(response.content)
+        f.close()
+
+        z = zipfile.ZipFile('.\\temp\\n_responce.zip', 'r')
+        z.extractall(".\\temp")
+        z.close()
+
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp\\n_responce.zip')
+        os.remove(path)
+
+        files = os.listdir(".\\temp")
+        f = open('.\\temp\\'+files[0], 'r', encoding='windows-1251')
+
+        info = Helper.JsonList(json.loads(f.read(), encoding='windows-1251'))
+
+        f.close()
+
+        return info
+
+    def DeleteTempFolder(self):
+        if os.path.exists("temp"):
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
+            shutil.rmtree(path)
     
     def close(self, json_container):
         plt.close(self.fig)
+        self.DeleteTempFolder()

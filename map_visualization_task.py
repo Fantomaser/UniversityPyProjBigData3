@@ -1,10 +1,14 @@
-import Helper
-import folium
-from folium.plugins import MarkerCluster
 import webbrowser
+import shutil
 import os
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
+
+from folium.plugins import MarkerCluster
+import folium
+
+import Helper
 
 class MapVisualizationProjectEvgen:
     def open(self, json_container):
@@ -42,7 +46,7 @@ class MapVisualizationProjectEvgen:
 
         self.fig, self.ax = plt.subplots(figsize=(8,6))
 
-        self.ax.pie(persents, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=350)
+        self.ax.pie(persents, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=60)
         self.ax.axis('equal')
 
         plt.show()
@@ -50,11 +54,11 @@ class MapVisualizationProjectEvgen:
     def SwupCoordinates(self, coordinates):
         return [coordinates[1],coordinates[0]]
 
-    def deleteTempFolder(self):
+    def DeleteTempFolder(self):
         if os.path.exists("temp"):
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
             shutil.rmtree(path)
 
     def close(self, json_container):
         plt.close(self.fig)
-        self.deleteTempFolder()
+        self.DeleteTempFolder()
