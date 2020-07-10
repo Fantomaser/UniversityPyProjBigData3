@@ -2,6 +2,9 @@ import Helper
 import folium
 from folium.plugins import MarkerCluster
 import webbrowser
+import os
+import numpy as np
+import matplotlib.pyplot as plt
 
 class MapVisualizationProjectEvgen:
     def open(self, json_container):
@@ -23,28 +26,35 @@ class MapVisualizationProjectEvgen:
         for camera in CAO:
             folium.CircleMarker(location=self.SwupCoordinates(camera["geoData"]["coordinates"]), radius = 8, fill_color="red", color="gray", popup = camera["Address"], fill_opacity = 0.9).add_to(marker_cluster_cao)
 
-        map.save("map.html")
+        os.mkdir(".\\temp")
 
-        #m = folium.Map(location=[55.764414, 37.647859])
-        #m.choropleth(
-        #    geo_data=full_gdf[['okrug', 'geometry']].to_json(),
-        #    name='choropleth',
-        #    data=full_gdf[['okrug', 'voters_oa']],
-        #    key_on='feature.properties.okrug',
-        #    columns=['okrug', 'voters_oa'],
-        #    fill_color='YlGnBu',
-        #    line_weight=1,
-        #    fill_opacity=0.7,
-        #    line_opacity=0.2,
-        #    legend_name='type',
-        #    highlight = True
-        #)
-        #m.save("map.html")
+        map.save(".\\temp\\map2.html")
         
-        webbrowser.open('.\map.html', new=1)
+        webbrowser.open('.\\temp\\map2.html', new=1)
+
+        labels = ["ЦАО", "Дмитровский район"]
+        persents = [
+            len(CAO)/((len(DR)+len(CAO))/100),
+            len(DR)/((len(DR)+len(CAO))/100)
+            ]
+
+        explode = (0.1, 0)
+
+        self.fig, self.ax = plt.subplots(figsize=(8,6))
+
+        self.ax.pie(persents, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=350)
+        self.ax.axis('equal')
+
+        plt.show()
 
     def SwupCoordinates(self, coordinates):
         return [coordinates[1],coordinates[0]]
 
+    def deleteTempFolder(self):
+        if os.path.exists("temp"):
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
+            shutil.rmtree(path)
+
     def close(self, json_container):
-        print("")
+        plt.close(self.fig)
+        self.deleteTempFolder()

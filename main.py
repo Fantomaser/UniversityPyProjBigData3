@@ -1,5 +1,5 @@
 import new_dataset_task
-import sorted_collaction_task
+import full_map_visualization_task
 import map_visualization_task
 import os
 import zipfile
@@ -64,7 +64,7 @@ class Window:
         self.window = Tk()
         self.window.title("Добро пожаловать в приложение PythonRu")
 
-        self.work_collaction = [new_dataset_task.NewDataProjectEvgen(), sorted_collaction_task.SortedCollactionProjectEvgen(), map_visualization_task.MapVisualizationProjectEvgen()] # пример [mybutton(), mybutton2()]
+        self.work_collaction = [new_dataset_task.NewDataProjectEvgen(), full_map_visualization_task.FullMupVisualizationProjectEvgen(), map_visualization_task.MapVisualizationProjectEvgen()] # пример [mybutton(), mybutton2()]
         self.ptr = 0
 
         self.btn = Button(self.window, text="back", command=self.clicked_before)
