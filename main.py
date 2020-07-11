@@ -1,9 +1,14 @@
-import os
-import zipfile
 import requests
-import json
+import zipfile
 import shutil
+import json
+import os
+
 from tkinter import *
+
+import new_dataset_task as solov_1
+import full_map_visualization_task as solov_2
+import map_visualization_task as solov_3
 
 
 
@@ -61,7 +66,11 @@ class Window:
         self.window = Tk()
         self.window.title("Добро пожаловать в приложение PythonRu")
 
-        self.work_collaction = [] # пример [mybutton(), mybutton2()]
+        self.work_collaction = [
+            solov_1.NewDataProjectEvgen(),
+            solov_2.FullMupVisualizationProjectEvgen(),
+            solov_3.MapVisualizationProjectEvgen()]
+
         self.ptr = 0
 
         self.btn = Button(self.window, text="back", command=self.clicked_before)
@@ -70,20 +79,42 @@ class Window:
         self.btn2 = Button(self.window, text="next", command=self.clicked_next)
         self.btn2.pack( side = RIGHT, fill = BOTH )
 
-        self.work_collaction[self.ptr].open(json_container)
+        try:
+            self.work_collaction[self.ptr].open(self.json_container)
+        except:
+            self.DeleteTempFolder()
+        
         self.window.mainloop()
         
     def clicked_before(self):
         if self.ptr > 0:
-            self.work_collaction[self.ptr].close(json_container)
+            try:
+                self.work_collaction[self.ptr].close(self.json_container)
+            except:
+                self.DeleteTempFolder()
             self.ptr-=1
-            self.work_collaction[self.ptr].open(json_container)
+            try:
+                self.work_collaction[self.ptr].open(self.json_container)
+            except:
+                self.DeleteTempFolder()
 
     def clicked_next(self):
         if self.ptr < (len(self.work_collaction)-1):
-            self.work_collaction[self.ptr].close(json_container)
+            try:
+                self.work_collaction[self.ptr].close(self.json_container)
+            except:
+                self.DeleteTempFolder()
             self.ptr+=1
-            self.work_collaction[self.ptr].open(json_container)
+            try:
+                self.work_collaction[self.ptr].open(self.json_container)
+            except:
+                self.DeleteTempFolder()
+
+    def DeleteTempFolder(self):
+        if os.path.exists("temp"):
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
+            shutil.rmtree(path)
+
 
 
 mywindow = Window(cameraInfo)
