@@ -10,9 +10,6 @@ import new_dataset_task as solov_1
 import full_map_visualization_task as solov_2
 import map_visualization_task as solov_3
 
-import VovaProjectDmitrov as vova_1
-import VovaProjectMaxCount as vova_2
-
 #подчищаем временную папку на случай если программа упала и остались папка с файлами
 if os.path.exists("temp"):
     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
@@ -68,8 +65,6 @@ class Window:
         self.window.title("Добро пожаловать в приложение PythonRu")
 
         self.work_collaction = [
-            vova_1.ProjectVovaDmotrov(),
-            vova_2.VovaProjectMaxCount(),
             solov_1.NewDataProjectEvgen(),
             solov_2.FullMupVisualizationProjectEvgen(),
             solov_3.MapVisualizationProjectEvgen()]
