@@ -10,6 +10,8 @@ import new_dataset_task as solov_1
 import full_map_visualization_task as solov_2
 import map_visualization_task as solov_3
 
+
+
 #подчищаем временную папку на случай если программа упала и остались папка с файлами
 if os.path.exists("temp"):
     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
