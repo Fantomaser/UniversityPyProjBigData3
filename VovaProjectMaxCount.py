@@ -1,4 +1,4 @@
-#authon: Войнов Владимир
+#author: Войнов Владимир
 
 import matplotlib.pyplot as plt
 

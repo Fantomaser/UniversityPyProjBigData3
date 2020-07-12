@@ -1,4 +1,4 @@
-#authon: Войнов Владимир
+#author: Войнов Владимир
 
 import webbrowser
 import shutil

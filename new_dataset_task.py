@@ -1,4 +1,4 @@
-#authon: Соловьев Евгений
+#author: Соловьев Евгений
 
 import requests
 import zipfile
