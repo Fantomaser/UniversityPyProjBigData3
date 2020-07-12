@@ -11,48 +11,50 @@ import Helper
 
 class FullMupVisualizationProjectEvgen:
     def open(self, json_container):
-        map = folium.Map(location=[55.753228, 37.622480], zoom_start = 9)
+        try:
+            map = folium.Map(location=[55.753228, 37.622480], zoom_start = 9)
 
-        geodata = self.MakeGeoData(json_container)
-        folium.GeoJson(
-            "http://gis-lab.info/data/mos-adm/ao.geojson",
-            name='geojson',
-        ).add_to(map)
+            geodata = self.MakeGeoData(json_container)
+            folium.GeoJson(
+                "http://gis-lab.info/data/mos-adm/ao.geojson",
+                name='geojson',
+            ).add_to(map)
 
-        for area in geodata[2]:
-            folium.CircleMarker(location=[area["lan"], area["lat"]], radius = 9, popup = str(area["AdmArea"]), fill_color=self.ColorPicker(area["count"], geodata[0], geodata[1]), color="gray", fill_opacity = 0.9).add_to(map)
+            for area in geodata[2]:
+                folium.CircleMarker(location=[area["lan"], area["lat"]], radius = 9, popup = str(area["AdmArea"]), fill_color=self.ColorPicker(area["count"], geodata[0], geodata[1]), color="gray", fill_opacity = 0.9).add_to(map)
 
-        folium.LayerControl().add_to(map)
+            folium.LayerControl().add_to(map)
 
-        os.mkdir(".\\temp")
+            os.mkdir(".\\temp")
+            map.save(".\\temp\\map1.html")
+            
+            webbrowser.open('.\\temp\\map1.html', new=1)
 
-        map.save(".\\temp\\map1.html")
-        webbrowser.open('.\\temp\\map1.html', new=1)
+            sortedCameraCounter = Helper.JsonList(sorted(geodata[2], key=lambda camera: camera["count"]))
 
-        sortedCameraCounter = Helper.JsonList(sorted(geodata[2], key=lambda camera: camera["count"]))
+            data = sortedCameraCounter.MakeComparisonData("AdmArea", "count").GetList()
 
-        data = sortedCameraCounter.MakeComparisonData("AdmArea", "count").GetList()
+            x = np.arange(len(data[0]))
 
-        print(data)
+            self.fig, self.ax = plt.subplots(figsize=(8,6))
+            self.fig.canvas.set_window_title('Проверка суждения о количестве камер в районах ЦАО')
 
-        x = np.arange(len(data[0]))
+            rects = self.ax.bar(x + 0.00, data[1], color = 'b', width = 0.50, label="камеры")
 
-        self.fig, self.ax = plt.subplots(figsize=(8,6))
-        self.fig.canvas.set_window_title('Проверка суждения о количестве камер в районах ЦАО')
+            self.ax.set_ylabel('Scores')
+            self.ax.set_title("Количество камер по округам")
+            self.ax.set_xticks(x)
+            self.ax.set_xticklabels(data[0])
+            self.ax.legend()
 
-        rects = self.ax.bar(x + 0.00, data[1], color = 'b', width = 0.50, label="камеры")
+            self.Autolabel(rects, "left")
 
-        self.ax.set_ylabel('Scores')
-        self.ax.set_title("Количество камер по округам")
-        self.ax.set_xticks(x)
-        self.ax.set_xticklabels(data[0])
-        self.ax.legend()
+            self.fig.tight_layout()
 
-        self.Autolabel(rects, "left")
-
-        self.fig.tight_layout()
-
-        plt.show()
+            plt.show()
+        except:
+            self.DeleteTempFolder()
+            print("solov open full map visual")
 
     def ColorPicker(self, value, max, min):
         scale = (max - min) / 510
@@ -128,5 +130,8 @@ class FullMupVisualizationProjectEvgen:
 
 
     def close(self, json_container):
-        plt.close(self.fig)
+        try:
+            plt.close(self.fig)
+        except:
+            print("solov close full map visual")
         self.DeleteTempFolder()
