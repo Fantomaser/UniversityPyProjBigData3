@@ -1,3 +1,5 @@
+#authon: Соловьев Евгений
+
 import webbrowser
 import shutil
 import os
@@ -8,8 +10,6 @@ import numpy as np
 import folium
 
 import Helper
-
-#authon: Соловьев Евгений
 
 class FullMupVisualizationProjectEvgen:
     def open(self, json_container):

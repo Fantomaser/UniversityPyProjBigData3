@@ -1,3 +1,5 @@
+#authon: Войнов Владимир
+
 import webbrowser
 import shutil
 import os
@@ -6,8 +8,6 @@ from folium.plugins import MarkerCluster
 import folium
 
 import Helper
-
-#authon: Войнов Владимир
 
 class ProjectVovaDmotrov:
     def open(self, json_container):   

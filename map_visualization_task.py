@@ -1,3 +1,5 @@
+#authon: Соловьев Евгений
+
 import webbrowser
 import shutil
 import os
@@ -9,8 +11,6 @@ from folium.plugins import MarkerCluster
 import folium
 
 import Helper
-
-#authon: Соловьев Евгений
 
 class MapVisualizationProjectEvgen:
     def open(self, json_container):

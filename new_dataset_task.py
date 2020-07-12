@@ -1,3 +1,5 @@
+#authon: Соловьев Евгений
+
 import requests
 import zipfile
 import shutil
@@ -8,8 +10,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import Helper
-
-#authon: Соловьев Евгений
 
 class NewDataProjectEvgen:
     def open(self, json_container):
