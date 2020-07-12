@@ -1,40 +1,56 @@
+#author Арзаняев Никита
+
 from collections import Counter
 import Helper
-import json
-import os
 import shutil
 import csv
-import numpy as np
-import pandas as pd
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import seaborn as sns
-import folium
-from folium.plugins import MarkerCluster
+import os
 
+import pandas as pd
+import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+import seaborn as sns
+
+from folium.plugins import MarkerCluster
+import folium
 
 class Nikita_proj1:
-
-
     def open(self, json_container):
-        fieldnames=["Район", "Количество камер"]
-        fieldnames1=["Округ", "Количество камер"]
-        cameraInfo=Helper.JsonList(json_container)
-        district = cameraInfo.GetAllUniquWalue("District")
-        admArea=cameraInfo.GetAllUniquWalue("AdmArea")
-        count_district=cameraInfo.GetEqualRowsCount("District", district, fieldnames)
-        count_admArea=cameraInfo.GetEqualRowsCount("AdmArea", admArea, fieldnames1)
-        #Создание csv файла  данными count_district
-        self.csv_dict_writer(path = ".\\temp\\dict_output.csv", fieldnames = ["Район", "Количество камер"], data=count_district)
-        #Создание csv файла с данными count_admArea
-        #self.csv_dict_writer(path=  ".\\temp\\admArea_output.csv", fieldnames=["Округ", "Количество камер"], data=count_admArea)
+        try:
+            self.pathRayon = ".\\temp\\dict_output.csv"
+            self.pathArea = ".\\temp\\admArea_output.csv"
+
+            fieldnames=["Район", "Количество камер"]
+            fieldnames1=["Округ", "Количество камер"]
+            cameraInfo=Helper.JsonList(json_container)
+            district = cameraInfo.GetAllUniquWalue("District")
+            admArea = cameraInfo.GetAllUniquWalue("AdmArea")
+            count_district=cameraInfo.GetEqualRowsCount("District", district, fieldnames)
+            count_admArea=cameraInfo.GetEqualRowsCount("AdmArea", admArea, fieldnames1)
+
+            os.mkdir(".\\temp")
+
+                #Создание csv файла  данными count_district
+            self.csv_dict_writer(path = self.pathRayon, fieldnames = ["Район", "Количество камер"], data=count_district)
+                #Создание csv файла с данными count_admArea
+            print(count_admArea)
+            self.csv_dict_writer(path = self.pathArea, fieldnames = ["Округ", "Количество камер"], data=count_admArea)
 
 
+                #Визуализация данных
+            df = pd.read_csv(self.pathRayon, encoding='windows-1251')
 
-#Запись данных в csv файл:
+            df.plot.bar(x='Район', y='Количество камер', cmap='coolwarm')
+            plt.show()
+        except:
+            self.DeleteTempFolder()
+
+
+    #Запись данных в csv файл:
     def csv_dict_writer(self, path, fieldnames, data):
-
-        os.mkdir(".\\temp")
 
         with open(path, "w", newline='') as out_file:
             writer = csv.DictWriter(out_file, delimiter=',', fieldnames=fieldnames)
@@ -43,12 +59,10 @@ class Nikita_proj1:
                 print(row)
                 writer.writerow(row)
 
-        #Визуализация данных
-        df = pd.read_csv('.\\temp\dict_output.csv', encoding='windows-1251')
-
-        df.plot.bar(x='Район', y='Количество камер', cmap='coolwarm')
-        plt.show()
-
+    def DeleteTempFolder(self):
+        if os.path.exists("temp"):
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'temp')
+            shutil.rmtree(path)
 
     def close(self, json_container):
         self.DeleteTempFolder()

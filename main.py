@@ -4,7 +4,9 @@ import requests
 import json
 import shutil
 from tkinter import *
-import Nikita_proj1
+import Nikita_proj1 as arzabaev_1
+import value_couner as arzabaev_2
+import least_area as arzabaev_3
 
 
 # подчищаем временную папку на случай если программа упала и остались папка с файлами
@@ -62,7 +64,10 @@ class Window:
         self.window = Tk()
         self.window.title("Добро пожаловать в приложение PythonRu")
 
-        self.work_collaction = [Nikita_proj1.Nikita_proj1(), Nikita_proj1.Nikita_proj1()]  # пример [mybutton(), mybutton2()]
+        self.work_collaction = [
+            #arzabaev_1.Nikita_proj1(),
+            arzabaev_2.ValueCounter(),
+            arzabaev_3.LeastArea()]  # пример [mybutton(), mybutton2()]
         self.ptr = 0
 
         self.btn = Button(self.window, text="back", command=self.clicked_before)
