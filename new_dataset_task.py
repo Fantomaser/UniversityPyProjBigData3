@@ -9,6 +9,8 @@ import numpy as np
 
 import Helper
 
+#authon: Соловьев Евгений
+
 class NewDataProjectEvgen:
     def open(self, json_container):
         try:      

@@ -10,6 +10,8 @@ import folium
 
 import Helper
 
+#authon: Соловьев Евгений
+
 class MapVisualizationProjectEvgen:
     def open(self, json_container):
         try:

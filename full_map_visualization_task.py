@@ -9,6 +9,8 @@ import folium
 
 import Helper
 
+#authon: Соловьев Евгений
+
 class FullMupVisualizationProjectEvgen:
     def open(self, json_container):
         try:

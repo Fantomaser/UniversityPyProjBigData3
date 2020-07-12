@@ -7,6 +7,8 @@ import folium
 
 import Helper
 
+#authon: Войнов Владимир
+
 class ProjectVovaDmotrov:
     def open(self, json_container):   
         cameraInfo = Helper.JsonList(json_container)    

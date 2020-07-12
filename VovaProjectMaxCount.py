@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 
 import Helper
 
+#authon: Войнов Владимир
+
 class VovaProjectMaxCount:
     def open(self, json_container):
         try:
