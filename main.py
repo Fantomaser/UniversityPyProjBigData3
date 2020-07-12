@@ -50,7 +50,7 @@ files = os.listdir(".\\temp")
 f = open('.\\temp\\'+files[0], 'r', encoding='windows-1251')
 
 #десериализация в json
-cameraInfo = json.loads(f.read())
+cameraInfo = json.loads(f.read(), encoding='windows-1251')
 
 f.close()
 
