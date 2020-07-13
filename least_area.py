@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 import Helper
 
-
 class LeastArea:
     def open(self, json_container):
         data = self.GetData(json_container)

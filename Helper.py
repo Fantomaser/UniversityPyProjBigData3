@@ -30,7 +30,7 @@ class JsonList(list):
     def Count(self):
         return len(self.collection)
     
-    def GetEqualRowsCount(self, param_name, collection, name_list = None):
+    def GetEqualRowsCount(self, param_name, collection):
         n_collection = list()
         counter = 0
         for it in collection:
@@ -42,10 +42,7 @@ class JsonList(list):
                             counter+=1
                     elif val == it:
                         counter+=1
-            if name_list == None:
-                n_collection.append([it, counter])
-            else:
-                n_collection.append({name_list[0]: it, name_list[1]: counter})
+            n_collection.append([it, counter])
             counter = 0
         return JsonList(n_collection)
 
