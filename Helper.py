@@ -20,7 +20,6 @@ class JsonList(list):
 
     def GetAllUniquWalue(self, param_name):
         qnique_collection = list()
-
         for it in self.collection:
             val = it.get(param_name)
             if val != None and qnique_collection.count(val) == 0:
