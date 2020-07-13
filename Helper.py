@@ -32,7 +32,7 @@ class JsonList(list):
     def GetEqualRowsCount(self, param_name, collection):
         n_collection = list()
         counter = 0
-        for it in collection:
+        for it in collection:           
             for it2 in self.collection:
                 val = it2.get(param_name)
                 if val != None:
