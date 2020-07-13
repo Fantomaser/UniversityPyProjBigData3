@@ -1,3 +1,5 @@
+#author: Соловьев Евгений
+
 import requests
 import zipfile
 import shutil
@@ -8,6 +10,11 @@ from tkinter import *
 
 import VovaProjectDmitrov as vova_1
 import VovaProjectMaxCount as vova_2
+
+import Nikita_proj1 as arzabaev_1
+import value_couner as arzabaev_2
+import least_area as arzabaev_3
+import Vizual as arzabaev_4
 
 import new_dataset_task as solov_1
 import full_map_visualization_task as solov_2
@@ -70,6 +77,10 @@ class Window:
         self.work_collaction = [
             vova_1.ProjectVovaDmotrov(),
             vova_2.VovaProjectMaxCount(),
+            arzabaev_1.Nikita_proj1(),
+            arzabaev_2.ValueCounter(),
+            arzabaev_3.LeastArea(),
+            arzabaev_4.Vizual2(),
             solov_1.NewDataProjectEvgen(),
             solov_2.FullMupVisualizationProjectEvgen(),
             solov_3.MapVisualizationProjectEvgen()]

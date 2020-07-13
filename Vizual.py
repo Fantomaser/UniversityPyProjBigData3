@@ -1,4 +1,4 @@
-#author Nikita
+#author Арзаняев Никита
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,7 +8,6 @@ import Helper
 class Vizual2:
     def open(self, json_container):
         data = self.GetData(json_container)
-        print(data)
 
         fig, (self.ax1, self.ax2) = plt.subplots(2, sharey=True, figsize=(8, 6))
         self.ax1.plot(data[2][0], data[1][0], 'ko-')

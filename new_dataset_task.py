@@ -45,7 +45,7 @@ class NewDataProjectEvgen:
             plt.show()
         except:
             self.DeleteTempFolder()
-            print("solov open data set")
+            print("solov error open data set")
 
     def LoadNewInfo(self, url):
         response = requests.get(url)
@@ -87,5 +87,5 @@ class NewDataProjectEvgen:
         try:
             plt.close(self.fig)
         except:
-            print("solov close data set")
+            print("solov error close data set")
         self.DeleteTempFolder()

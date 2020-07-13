@@ -55,7 +55,7 @@ class MapVisualizationProjectEvgen:
             plt.show()
         except:
              self.DeleteTempFolder()
-             print("solov open map visual")
+             print("solov error open map visual")
 
     def SwupCoordinates(self, coordinates):
         return [coordinates[1],coordinates[0]]
@@ -69,5 +69,5 @@ class MapVisualizationProjectEvgen:
         try:
             plt.close(self.fig)
         except:
-            print("solov close map visual")
+            print("solov error close map visual")
         self.DeleteTempFolder()

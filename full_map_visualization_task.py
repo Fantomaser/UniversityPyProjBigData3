@@ -56,7 +56,7 @@ class FullMupVisualizationProjectEvgen:
             plt.show()
         except:
             self.DeleteTempFolder()
-            print("solov open full map visual")
+            print("solov error open full map visual")
 
     def ColorPicker(self, value, max, min):
         scale = (max - min) / 510
@@ -135,5 +135,5 @@ class FullMupVisualizationProjectEvgen:
         try:
             plt.close(self.fig)
         except:
-            print("solov close full map visual")
+            print("solov error close full map visual")
         self.DeleteTempFolder()

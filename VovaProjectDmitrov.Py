@@ -44,4 +44,3 @@ class ProjectVovaDmotrov:
     
     def close(self, json_container):
         self.DeleteTempFolder()
-        print("")
