@@ -7,7 +7,7 @@ from tkinter import *
 import Nikita_proj1 as arzabaev_1
 import value_couner as arzabaev_2
 import least_area as arzabaev_3
-
+import Vizual as vizual
 
 # подчищаем временную папку на случай если программа упала и остались папка с файлами
 if os.path.exists("temp"):
@@ -66,6 +66,7 @@ class Window:
 
         self.work_collaction = [
             #arzabaev_1.Nikita_proj1(),
+            vizual.Vizual2(),
             arzabaev_2.ValueCounter(),
             arzabaev_3.LeastArea()]  # пример [mybutton(), mybutton2()]
         self.ptr = 0
