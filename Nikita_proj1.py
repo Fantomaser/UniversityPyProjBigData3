@@ -30,7 +30,6 @@ class Nikita_proj1:
             admArea = cameraInfo.GetAllUniquWalue("AdmArea")
             count_district=cameraInfo.GetEqualRowsCount("District", district, fieldnames)
             count_admArea=cameraInfo.GetEqualRowsCount("AdmArea", admArea, fieldnames1)
-
             os.mkdir(".\\temp")
 
                 #Создание csv файла  данными count_district
@@ -38,13 +37,6 @@ class Nikita_proj1:
                 #Создание csv файла с данными count_admArea
             print(count_admArea)
             self.csv_dict_writer(path = self.pathArea, fieldnames = ["Округ", "Количество камер"], data=count_admArea)
-
-
-                #Визуализация данных
-            df = pd.read_csv(self.pathRayon, encoding='windows-1251')
-
-            df.plot.bar(x='Район', y='Количество камер', cmap='coolwarm')
-            plt.show()
         except:
             self.DeleteTempFolder()
 
@@ -56,7 +48,6 @@ class Nikita_proj1:
             writer = csv.DictWriter(out_file, delimiter=',', fieldnames=fieldnames)
             writer.writeheader()
             for row in data.GetList():
-                print(row)
                 writer.writerow(row)
 
     def DeleteTempFolder(self):

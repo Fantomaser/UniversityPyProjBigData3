@@ -40,4 +40,4 @@ class ValueCounter:
             shutil.rmtree(path)
 
     def close(self, json_container):
-        print()
+        print("")
